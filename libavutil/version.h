@@ -18,6 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+/**
+ * @file
+ * @ingroup lavu
+ * Libavutil version macros
+ */
+
 #ifndef AVUTIL_VERSION_H
 #define AVUTIL_VERSION_H
 
@@ -37,13 +43,15 @@
 #define AV_VERSION(a, b, c) AV_VERSION_DOT(a, b, c)
 
 /**
- * @}
+ * Extract version components from the full ::AV_VERSION_INT int as returned
+ * by functions like ::avformat_version() and ::avcodec_version()
  */
+#define AV_VERSION_MAJOR(a) ((a) >> 16)
+#define AV_VERSION_MINOR(a) (((a) & 0x00FF00) >> 8)
+#define AV_VERSION_MICRO(a) ((a) & 0xFF)
 
 /**
- * @file
- * @ingroup lavu
- * Libavutil version macros
+ * @}
  */
 
 /**
@@ -56,7 +64,7 @@
  */
 
 #define LIBAVUTIL_VERSION_MAJOR  55
-#define LIBAVUTIL_VERSION_MINOR   6
+#define LIBAVUTIL_VERSION_MINOR  28
 #define LIBAVUTIL_VERSION_MICRO 100
 
 #define LIBAVUTIL_VERSION_INT   AV_VERSION_INT(LIBAVUTIL_VERSION_MAJOR, \
@@ -70,9 +78,7 @@
 #define LIBAVUTIL_IDENT         "Lavu" AV_STRINGIFY(LIBAVUTIL_VERSION)
 
 /**
- * @}
- *
- * @defgroup depr_guards Deprecation guards
+ * @defgroup lavu_depr_guards Deprecation Guards
  * FF_API_* defines may be placed below to indicate public API that will be
  * dropped at a future version bump. The defines themselves are not part of
  * the public API and may change, break or disappear at any time.
@@ -108,11 +114,14 @@
 #ifndef FF_API_ERROR_FRAME
 #define FF_API_ERROR_FRAME              (LIBAVUTIL_VERSION_MAJOR < 56)
 #endif
+#ifndef FF_API_CRC_BIG_TABLE
+#define FF_API_CRC_BIG_TABLE            (LIBAVUTIL_VERSION_MAJOR < 56)
+#endif
 
 
 /**
  * @}
+ * @}
  */
 
 #endif /* AVUTIL_VERSION_H */
-
